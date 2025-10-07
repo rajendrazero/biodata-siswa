@@ -1,10 +1,12 @@
 <?php
-$host = "127.0.0.1";
-$user = "root"; // ganti kalau pakai user lain
-$pass = "";
-$db   = "db_siswa";
 
-$conn = new mysqli($host, $user, $pass, $db);
+$db   = "db_siswa";
+$host = "maglev.proxy.rlwy.net";
+$port = "35682"; // ganti sesuai port Railway DB-mu
+$user = "root";
+$pass = "RQDnCUbLBvpLHlbgfDDGuORKVjFOznhB";
+
+$conn = new mysqli($host, $port, $user, $pass, $db);
 
 if ($conn->connect_error) {
   die("Koneksi gagal: " . $conn->connect_error);
