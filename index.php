@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Data Siswa</title>
-  <!-- Link ke DataTables dan Font -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <style>
@@ -103,17 +102,13 @@
   </style>
 </head>
 <body>
-
   <div class="container">
     <h2>📋 Data Siswa</h2>
     <div style="text-align:right; margin-bottom:10px;">
       <a href="tambah.php" class="btn-custom">➕ Tambah Siswa</a>
-     <a href="export_excel.php" class="btn-custom" style="background:#198754;">⬇️ Excel</a>
-<a href="export_pdf.php" class="btn-custom" style="background:#dc3545;">⬇️ PDF</a>
+      <a href="export_excel.php" class="btn-custom" style="background:#198754;">⬇️ Excel</a>
+      
     </div>
-    
-    
-    
 
     <div class="table-responsive">
       <table id="tabelSiswa" class="table table-striped table-bordered">
@@ -134,16 +129,16 @@
             <th>Bakat & Minat</th>
             <th>Cita-cita</th>
             <th>Mapel Disukai</th>
-            <th>Bahasa bisa/ingin dikuasai</th>
+            <th>Bahasa Dikuasai</th>
             <th>Rencana Setelah Lulus</th>
             <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
         <?php
-        $result = $conn->query("SELECT * FROM siswa ORDER BY no_urut ASC");
+        $stmt = $conn->query("SELECT * FROM siswa ORDER BY no_urut ASC");
         $no = 1;
-        while ($row = $result->fetch_assoc()) {
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           echo "<tr>
               <td>{$no}</td>
               <td>{$row["nama_siswa"]}</td>
@@ -175,27 +170,14 @@
     </div>
   </div>
 
-  <!-- Script DataTables -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
   <script>
     $(document).ready(function() {
       $('#tabelSiswa').DataTable({
-        "language": {
-          "lengthMenu": "Tampilkan _MENU_ data per halaman",
-          "zeroRecords": "Tidak ditemukan data",
-          "info": "Menampilkan _START_ - _END_ dari _TOTAL_ data",
-          "infoEmpty": "Tidak ada data tersedia",
-          "search": "Cari:",
-          "paginate": {
-            "first": "Pertama",
-            "last": "Terakhir",
-            "next": "▶",
-            "previous": "◀"
-          }
-        },
-        "pageLength": 10
+        language: { search: "Cari:" },
+        pageLength: 10
       });
     });
   </script>
