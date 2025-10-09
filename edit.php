@@ -1,13 +1,14 @@
 <?php 
 include 'config.php'; 
 $id = $_GET['id'];
-$data = $conn->query("SELECT * FROM siswa WHERE id=$id")->fetch_assoc();
+$stmt = $conn->prepare("SELECT * FROM siswa WHERE id = ?");
+$stmt->execute([$id]);
+$data = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Edit Data Siswa</title>
   <style>
     /* === RESET & DASAR === */
@@ -214,21 +215,21 @@ $data = $conn->query("SELECT * FROM siswa WHERE id=$id")->fetch_assoc();
 
   <?php
   if (isset($_POST['update'])) {
-    $stmt = $conn->prepare("UPDATE siswa SET 
+    $sql = "UPDATE siswa SET 
       nama_siswa=?, nis=?, nisn=?, jenis_kelamin=?, tempat_tanggal_lahir=?, 
       agama=?, nama_ortu=?, pekerjaan_ortu=?, alamat_ortu=?, telp_ortu=?, 
       telp_siswa=?, bakat_minat=?, cita_cita=?, mapel_disukai=?, bahasa_dikuasai=?, 
-      rencana_setelah_lulus=? WHERE id=?");
-      
-    $stmt->bind_param("ssssssssssssssssi",
+      rencana_setelah_lulus=? WHERE id=?";
+    $stmt = $conn->prepare($sql);
+    $success = $stmt->execute([
       $_POST['nama_siswa'], $_POST['nis'], $_POST['nisn'], $_POST['jenis_kelamin'],
       $_POST['ttl'], $_POST['agama'], $_POST['nama_ortu'], $_POST['pekerjaan_ortu'],
       $_POST['alamat_ortu'], $_POST['telp_ortu'], $_POST['telp_siswa'],
       $_POST['bakat_minat'], $_POST['cita_cita'], $_POST['mapel_disukai'],
       $_POST['bahasa_dikuasai'], $_POST['rencana'], $id
-    );
+    ]);
 
-    if ($stmt->execute()) {
+    if ($success) {
       echo "<script>alert('✅ Data berhasil diupdate!');window.location='index.php';</script>";
     } else {
       echo "<script>alert('❌ Gagal update data!');</script>";
