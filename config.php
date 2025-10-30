@@ -12,7 +12,7 @@ $user = "root";
 $pass = "RQDnCUbLBvpLHlbgfDDGuORKVjFOznhB";
 
 try {
-    $conn = new PDO("pgsql:host=$host;port=$port;dbname=$dbname", $user, $password);
+    $conn = new PDO("pgsql:host=$host;port=$port;dbname=$db", $user, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     // echo "Koneksi berhasil";
 } catch (PDOException $e) {
